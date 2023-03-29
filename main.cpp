@@ -39,25 +39,6 @@ class AbstractSubject{
             this ->Duration=Duration;
         };
 };
-
-// Abstract class for a lecture
-class Lecture {
-protected:
-    string firstName;
-    string lastName;
-
-public:
-    virtual string getFirstName() = 0;
-    virtual void setFirstName(string firstName) = 0;
-    virtual string getLastName() = 0;
-    virtual void setLastName(string lastName) = 0;
-    
-Lecture (string firstName, string lastName) {
-        this->firstName = firstName;
-        this->lastName = lastName;
-    };
-};
-
 // Abstract class for a Student
 class AbstractStudent{
     protected:
@@ -105,10 +86,49 @@ class AbstractStudent{
             this -> SubjectName=SubjectName;
         };
         virtual void Student(){};
+        virtual void setQuiz_Score(float Quiz_Score){};
         
 };
 
 int AbstractStudent::StudentCount = 0;
+
+// Abstract class for a lecture
+class Lecture {
+protected:
+    string firstName;
+    string lastName;
+    string SubjectName;
+
+public:
+    virtual string getFirstName() = 0;
+    virtual void setFirstName(string firstName) = 0;
+    virtual string getLastName() = 0;
+    virtual void setLastName(string lastName) = 0;
+    virtual string getSubjectName() = 0;
+    virtual void setSubjectName(string SubjectName) = 0;
+    
+    virtual string PerformLecture(int chapter, string date){
+        string message="ლექტორი ატარებს ლექციას";
+        cout<<message<<endl;
+        return message;
+    }
+    virtual string studentAttendance (AbstractStudent student, int chapter){
+        string message="სტუდენტი დაესწრო ლექციას";
+        cout<<message<<endl;
+        return message;
+    };
+    virtual float updateStudentQuizScore(AbstractStudent& student, float quizScore)=0;
+    
+   
+Lecture (string firstName, string lastName, string SubjectName) {
+        this->firstName = firstName;
+        this->lastName = lastName;
+        this->SubjectName = SubjectName;
+    };
+
+};
+
+
 
 // SkillWillSubject Class
 class skillWillSubject: AbstractSubject{
@@ -130,7 +150,7 @@ class skillWillSubject: AbstractSubject{
 
 
 // SkillWillStudent Class
-class skillWillStudent:AbstractStudent{
+class skillWillStudent:public AbstractStudent{
         string Course;
         string Section;
         float Quiz_Score;
@@ -166,6 +186,7 @@ class skillWillStudent:AbstractStudent{
         
       
 };
+//SkillwillLecturer
 
 class SkillwillLecturer : public Lecture {
 private: 
@@ -174,7 +195,7 @@ private:
     
 public:
 
-SkillwillLecturer(string firstName, string lastName, int chapter, int level): Lecture(firstName, lastName){
+SkillwillLecturer(string firstName, string lastName, string SubjectName, int chapter, int level): Lecture(firstName, lastName, SubjectName){
     this->chapter=chapter;
     this->level=level;
 }
@@ -191,6 +212,13 @@ SkillwillLecturer(string firstName, string lastName, int chapter, int level): Le
     void setLastName(string lastName)  {
         this->lastName = lastName;
     }
+    string getSubjectName(){
+        return SubjectName;
+    }
+    void setSubjectName(string SubjectName){
+        this->SubjectName = SubjectName;
+    }
+    
     int getChapter() {
         return chapter;
     }
@@ -203,20 +231,39 @@ SkillwillLecturer(string firstName, string lastName, int chapter, int level): Le
     void setLevel(int level) {
         this->level = level;
     }
+    string PerformLecture(int chapter, string date){
+        string fullName=firstName+" "+lastName;
+        cout<<fullName<<" ატარებს ლექციას"<<endl;
+        return fullName;
+    }
+    string studentAttendance(AbstractStudent student, int chapter){
+        string fullName=student.getFirstName()+" "+student.getLastName();
+        string message=fullName+" დაესწრო ლექციას";
+        cout<<message<<endl;
+        return fullName;
     
+    }
+    
+    float updateStudentQuizScore(AbstractStudent& student, float quizScore) {
+        student.setQuiz_Score(quizScore);
+        return quizScore;
+    }
+    
+        
 };
 
 
 int main()
 {
-       SkillwillLecturer l= SkillwillLecturer("sopo", "girgvliani", 1,1);
+       SkillwillLecturer l= SkillwillLecturer("sopo", "girgvliani","smmss", 1,1);
+       skillWillStudent S= skillWillStudent("levan", "mgebrishvili",25,"web", "C", 30 );
 
-cout<<l.getFirstName()<<endl;
-cout<<l.getLastName()<<endl;
-cout<<l.getChapter()<<endl;
-cout<<l.getLevel()<<endl;
+l.PerformLecture(5,"01.11.2022");
+l.studentAttendance(S,7);
+l.updateStudentQuizScore(S, 40);
+cout << S.getQuiz_Score() << endl;
+
 
     return 0;
-    
-    
 }
+
