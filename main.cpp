@@ -22,6 +22,96 @@ Lecture (string firstName, string lastName) {
     };
 };
 
+// Abstract class for a Student
+class AbstractStudent{
+    protected:
+        string FirstName;
+        string LastName;
+        int Age;
+        string SubjectName;
+    
+    public:
+        static int StudentCount;
+        
+        AbstractStudent(string FirstName, string LastName, int Age, string SubjectName){
+            this ->FirstName=FirstName;
+            this ->LastName=LastName;
+            this ->Age=Age;
+            this ->SubjectName=SubjectName;
+            StudentCount++;
+        }
+        
+        string getFirstName(){
+            return FirstName;
+        };
+        void setFirstName(string FirstName){
+            this -> FirstName=FirstName;
+        };
+        
+        string getLastName(){
+            return LastName;
+        };
+        void setLastName(string LastName){
+            this -> LastName=LastName;
+        };
+        
+        int getAge(){
+            return Age;
+        };
+        void setAge(int Age){
+            this -> Age=Age;
+        };
+        
+        string getSubjectName(){
+            return SubjectName;
+        };
+        void setSubjectName(string SubjectName){
+            this -> SubjectName=SubjectName;
+        };
+        virtual void Student(){};
+        
+};
+
+int AbstractStudent::StudentCount = 0;
+
+//SkillWillStudentClass
+class skillWillStudent:AbstractStudent{
+        string Course;
+        string Section;
+        float Quiz_Score;
+    
+    public:
+        skillWillStudent(string FirstName, string LastName, int Age, string Course, string Section, float Quiz_Score):
+        AbstractStudent(FirstName,LastName,Age,SubjectName){
+            this -> Course=Course;
+            this -> Section=Section;
+            this -> Quiz_Score=Quiz_Score;
+        }
+        
+        string getCourse(){
+            return Course;
+        };
+        void setCourse(string Course){
+            this -> Course=Course;
+        };
+        
+        string getSection(){
+            return Section;
+        };
+        void setSection(string Section){
+            this -> Section=Section;
+        };
+        
+        float getQuiz_Score(){
+            return Quiz_Score;
+        };
+        void setQuiz_Score(float Quiz_Score){
+            this -> Quiz_Score=Quiz_Score;
+        };
+        
+      
+};
+
 class SkillwillLecturer : public Lecture {
 private: 
     int chapter;
