@@ -3,6 +3,42 @@
 #include <vector>
 
 using namespace std;
+// Abstract class for a subject
+class AbstractSubject{
+    protected:
+        string SubjectName;
+        string BeginTime;
+        int Duration;
+    public:
+        AbstractSubject(string SubjectName, string BegintTime, int Duration){
+            this ->SubjectName=SubjectName;
+            this ->BeginTime=BeginTime;
+            this ->Duration=Duration;
+        };
+        
+        virtual void Subject(){};
+        
+        string getSubjectName(){
+            return SubjectName;
+        };
+        void setSubjectName(string SubjectName){
+            this ->SubjectName=SubjectName;
+        };
+        
+        string getBeginTime(){
+            return BeginTime;
+        };
+        void setBeginTime(string BeginTime){
+            this ->BeginTime=BeginTime;
+        };
+        
+        int getDuration(){
+            return Duration;
+        };
+        void setDuration(int Duration){
+            this ->Duration=Duration;
+        };
+};
 
 // Abstract class for a lecture
 class Lecture {
@@ -74,7 +110,26 @@ class AbstractStudent{
 
 int AbstractStudent::StudentCount = 0;
 
-//SkillWillStudentClass
+// SkillWillSubject Class
+class skillWillSubject: AbstractSubject{
+        string Last_Lecture_Title;
+    public:
+        skillWillSubject(string SubjectName, string BeginTime, int Duration, string Last_Lecture_Title):
+        AbstractSubject(SubjectName,BeginTime,Duration){
+            this ->Last_Lecture_Title=Last_Lecture_Title;
+        };
+        
+        string getLast_Lecture_Title(){
+            return Last_Lecture_Title;
+        };
+        void setLast_Lecture_Title(string Last_Lecture_Title){
+            this -> Last_Lecture_Title=Last_Lecture_Title;
+        };
+    
+};
+
+
+// SkillWillStudent Class
 class skillWillStudent:AbstractStudent{
         string Course;
         string Section;
